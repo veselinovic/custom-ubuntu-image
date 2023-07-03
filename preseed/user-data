@@ -1,0 +1,36 @@
+#cloud-config
+autoinstall:
+  version: 1
+  # early-commands:
+  #   - systemctl stop ssh
+  interactive-sections:
+    - network
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+    variant: intl
+  identity:
+    hostname: CHANGE-HOSTNAME
+    username: CHANGE-USERNAME
+    password: CHANGE-PASSWORD
+  ssh:
+    install-server: yes
+    authorized-keys:
+      - CHANGE-SSH-PUBLIC-KEY
+    allow-pw: yes
+  apt:
+    geoip: true
+    primary:
+     - arches: [CHANGE-ARCH]
+       uri: "http://archive.ubuntu.com/ubuntu"
+     - arches: [default]
+       uri: "http://ports.ubuntu.com/ubuntu-ports"
+  packages:
+    - htop
+    - tmux
+  storage:
+    layout:
+      name: lvm
+  late-commands:
+    - ssh-keygen -A
+    - reboot
